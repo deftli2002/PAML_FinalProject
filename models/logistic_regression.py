@@ -2,19 +2,16 @@ import numpy as np
 
 
 class LogisticRegressionClassifier:
-    
-    def __init__(self, lr=0.01, max_iter=1000, verbose=True):
-        self.lr = lr
-        self.max_iter = max_iter
+    def __init__(self, lr=0.01,max_iter=1000, verbose=True):
+        self.lr= lr
+        self.max_iter= max_iter
         self.verbose = verbose
-        self.w = None
+        self.w =None
         self.b = None
-        self.cost_history = []
-    
+        self.cost_history= []
     def _sigmoid(self, z):
-        z = np.clip(z, -500, 500)
-        return 1.0 / (1.0 + np.exp(-z))
-    
+        z = np.clip(z,-500, 500)
+        return 1.0/ (1.0 + np.exp(-z))
     def _compute_cost(self, y, y_hat):
         n = len(y)
         eps = 1e-15
