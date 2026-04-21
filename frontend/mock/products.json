@@ -1,0 +1,629 @@
+[
+  {
+    "id": "prod-001",
+    "brand_name": "PainRelief Max",
+    "generic_name": "Acetaminophen 500 mg Tablet",
+    "labeler": "NorthStar Therapeutics",
+    "manufacturer": "NorthStar Therapeutics Inc.",
+    "product_ndc": "54868-102-10",
+    "application_number": "NDA020145",
+    "marketing_category": "NDA",
+    "product_type": "Human OTC Drug",
+    "dosage_form": "Tablet",
+    "route": "Oral",
+    "finished": "Finished",
+    "market_start_date": "2019-03-12",
+    "listing_expiration_date": "2027-12-31",
+    "predicted_risk_level": "Moderate",
+    "risk_score": 0.67,
+    "predicted_action": "Potential Class II recall within 12 months",
+    "quality_signal": "Elevated liver-toxicity FAERS reports after a recent supplier change.",
+    "summary": "Moderate predicted recall risk driven by adverse-event acceleration and manufacturing drift.",
+    "active_ingredients": [
+      {
+        "name": "Acetaminophen",
+        "strength": "500 mg"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "100 tablets in bottle",
+        "package_ndc": "54868-102-01"
+      },
+      {
+        "package_description": "24 tablets in blister pack",
+        "package_ndc": "54868-102-24"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "FAERS trend shift",
+        "impact": "High",
+        "detail": "Recent quarters show a step-up in liver-related event reporting."
+      },
+      {
+        "driver": "Supplier transition",
+        "impact": "Medium",
+        "detail": "API source changed twice in the prior 18 months."
+      }
+    ],
+    "compliance_flags": [
+      "Lot-level labeling variation flagged during internal review",
+      "Packaging artwork updated after complaint cluster",
+      "Supplier qualification cycle still open"
+    ],
+    "recall_history": [
+      {
+        "event_date": "2024-08-15",
+        "classification": "Class II",
+        "reason": "Tablet count mismatch in consumer bottle pack"
+      }
+    ]
+  },
+  {
+    "id": "prod-002",
+    "brand_name": "CardioEase XR",
+    "generic_name": "Metoprolol Succinate Extended-Release Tablet",
+    "labeler": "Helix Biopharma",
+    "manufacturer": "Helix Biopharma Manufacturing LLC",
+    "product_ndc": "63742-880-30",
+    "application_number": "ANDA078945",
+    "marketing_category": "ANDA",
+    "product_type": "Human Prescription Drug",
+    "dosage_form": "Tablet, Extended Release",
+    "route": "Oral",
+    "finished": "Finished",
+    "market_start_date": "2018-11-07",
+    "listing_expiration_date": "2028-05-31",
+    "predicted_risk_level": "Low",
+    "risk_score": 0.24,
+    "predicted_action": "Low near-term recall probability",
+    "quality_signal": "Stable event volume and no meaningful packaging anomalies.",
+    "summary": "The product looks operationally stable with a low predicted enforcement risk.",
+    "active_ingredients": [
+      {
+        "name": "Metoprolol Succinate",
+        "strength": "50 mg"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "30 tablets in bottle",
+        "package_ndc": "63742-880-03"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Complaint rate",
+        "impact": "Low",
+        "detail": "Consumer complaint frequency remains below peer median."
+      },
+      {
+        "driver": "Manufacturing consistency",
+        "impact": "Low",
+        "detail": "No recent process deviations were attached to release batches."
+      }
+    ],
+    "compliance_flags": [
+      "No open CAPA items tied to this product"
+    ],
+    "recall_history": []
+  },
+  {
+    "id": "prod-003",
+    "brand_name": "SteriCef IV",
+    "generic_name": "Cefazolin for Injection",
+    "labeler": "BioVertex Injectables",
+    "manufacturer": "BioVertex Sterile Operations",
+    "product_ndc": "71244-501-02",
+    "application_number": "ANDA213884",
+    "marketing_category": "ANDA",
+    "product_type": "Human Prescription Drug",
+    "dosage_form": "Injection, Powder, Lyophilized, For Solution",
+    "route": "Intravenous",
+    "finished": "Finished",
+    "market_start_date": "2021-01-18",
+    "listing_expiration_date": "2026-10-31",
+    "predicted_risk_level": "High",
+    "risk_score": 0.91,
+    "predicted_action": "Potential Class I or Class II sterile-product recall",
+    "quality_signal": "Sterility assurance concerns and elevated contamination complaint severity.",
+    "summary": "High predicted regulatory risk due to sterile manufacturing signals and complaint severity.",
+    "active_ingredients": [
+      {
+        "name": "Cefazolin Sodium",
+        "strength": "1 g/vial"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "10 single-dose vials",
+        "package_ndc": "71244-501-10"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Sterility signal",
+        "impact": "High",
+        "detail": "Complaint narratives indicate particulate findings in multiple lots."
+      },
+      {
+        "driver": "Rapid event escalation",
+        "impact": "High",
+        "detail": "Adverse-event incidence increased materially over the last two quarters."
+      },
+      {
+        "driver": "Short shelf-life pressure",
+        "impact": "Medium",
+        "detail": "Listing expiration is closer than most sterile peers."
+      }
+    ],
+    "compliance_flags": [
+      "Environmental monitoring excursion under investigation",
+      "Deviation closure overdue for two sterile fill campaigns",
+      "Customer complaint triage volume above alert threshold"
+    ],
+    "recall_history": [
+      {
+        "event_date": "2025-01-10",
+        "classification": "Class II",
+        "reason": "Visible particulate matter in a limited lot release"
+      },
+      {
+        "event_date": "2024-03-03",
+        "classification": "Market withdrawal",
+        "reason": "Seal integrity issue identified during stability review"
+      }
+    ]
+  },
+  {
+    "id": "prod-004",
+    "brand_name": "AllerFree Nasal",
+    "generic_name": "Fluticasone Propionate Nasal Spray",
+    "labeler": "GreenLeaf Consumer Health",
+    "manufacturer": "GreenLeaf Consumer Health",
+    "product_ndc": "45920-310-16",
+    "application_number": "NDA021860",
+    "marketing_category": "NDA",
+    "product_type": "Human OTC Drug",
+    "dosage_form": "Spray",
+    "route": "Nasal",
+    "finished": "Finished",
+    "market_start_date": "2017-04-02",
+    "listing_expiration_date": "2029-09-30",
+    "predicted_risk_level": "Low",
+    "risk_score": 0.19,
+    "predicted_action": "Low near-term recall probability",
+    "quality_signal": "Stable supply chain and low complaint severity over time.",
+    "summary": "This product remains low risk with consistent complaint and event patterns.",
+    "active_ingredients": [
+      {
+        "name": "Fluticasone Propionate",
+        "strength": "50 mcg/spray"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "16 g nasal spray bottle",
+        "package_ndc": "45920-310-01"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Operational stability",
+        "impact": "Low",
+        "detail": "No meaningful manufacturing disruptions were recorded."
+      }
+    ],
+    "compliance_flags": [
+      "Routine annual review only"
+    ],
+    "recall_history": []
+  },
+  {
+    "id": "prod-005",
+    "brand_name": "DermaCalm",
+    "generic_name": "Hydrocortisone Cream 1%",
+    "labeler": "Apex Dermatology Labs",
+    "manufacturer": "Apex Dermatology Labs",
+    "product_ndc": "80155-415-45",
+    "application_number": "OTC000114",
+    "marketing_category": "OTC Monograph Final",
+    "product_type": "Human OTC Drug",
+    "dosage_form": "Cream",
+    "route": "Topical",
+    "finished": "Finished",
+    "market_start_date": "2016-06-11",
+    "listing_expiration_date": "2027-06-30",
+    "predicted_risk_level": "Moderate",
+    "risk_score": 0.55,
+    "predicted_action": "Potential Class II quality recall",
+    "quality_signal": "Complaint narratives suggest potency drift in retained samples.",
+    "summary": "Moderate risk driven by potency variability and packaging inconsistency.",
+    "active_ingredients": [
+      {
+        "name": "Hydrocortisone",
+        "strength": "10 mg/g"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "45 g tube",
+        "package_ndc": "80155-415-01"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Potency drift",
+        "impact": "Medium",
+        "detail": "Retained-sample testing showed widening assay spread."
+      },
+      {
+        "driver": "Tube seal complaints",
+        "impact": "Medium",
+        "detail": "Several consumer reports mention leakage during transit."
+      }
+    ],
+    "compliance_flags": [
+      "Packaging vendor CAPA remains open",
+      "Line clearance exception recorded during prior quarter"
+    ],
+    "recall_history": [
+      {
+        "event_date": "2023-11-14",
+        "classification": "Class II",
+        "reason": "Leaking tube crimp on a narrow production lot"
+      }
+    ]
+  },
+  {
+    "id": "prod-006",
+    "brand_name": "GlucoBalance Pen",
+    "generic_name": "Insulin Glargine Injection",
+    "labeler": "NovaEndo Biologics",
+    "manufacturer": "NovaEndo Biologics",
+    "product_ndc": "62188-777-15",
+    "application_number": "BLA761220",
+    "marketing_category": "BLA",
+    "product_type": "Human Prescription Drug",
+    "dosage_form": "Injection, Solution",
+    "route": "Subcutaneous",
+    "finished": "Finished",
+    "market_start_date": "2022-02-24",
+    "listing_expiration_date": "2027-02-28",
+    "predicted_risk_level": "High",
+    "risk_score": 0.84,
+    "predicted_action": "Potential Class II biologic-device combination recall",
+    "quality_signal": "Temperature excursion sensitivity and pen-device complaint concentration.",
+    "summary": "High risk due to cold-chain sensitivity and recurring device performance complaints.",
+    "active_ingredients": [
+      {
+        "name": "Insulin Glargine",
+        "strength": "100 units/mL"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "5 prefilled pens",
+        "package_ndc": "62188-777-05"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Cold-chain variability",
+        "impact": "High",
+        "detail": "Shipment temperature excursions are rising in distribution records."
+      },
+      {
+        "driver": "Device complaint pattern",
+        "impact": "High",
+        "detail": "Users reported dose-dial inconsistency across multiple lots."
+      }
+    ],
+    "compliance_flags": [
+      "Distribution lane review requested",
+      "Complaint investigation backlog above target"
+    ],
+    "recall_history": [
+      {
+        "event_date": "2025-06-28",
+        "classification": "Class II",
+        "reason": "Dose-dial under-delivery in selected pen lots"
+      }
+    ]
+  },
+  {
+    "id": "prod-007",
+    "brand_name": "RespiraMist",
+    "generic_name": "Albuterol Sulfate Inhalation Aerosol",
+    "labeler": "Skyline Respiratory",
+    "manufacturer": "Skyline Respiratory Devices",
+    "product_ndc": "70011-244-18",
+    "application_number": "NDA021457",
+    "marketing_category": "NDA",
+    "product_type": "Human Prescription Drug",
+    "dosage_form": "Aerosol, Metered",
+    "route": "Respiratory (Inhalation)",
+    "finished": "Finished",
+    "market_start_date": "2015-09-14",
+    "listing_expiration_date": "2028-11-30",
+    "predicted_risk_level": "Moderate",
+    "risk_score": 0.61,
+    "predicted_action": "Potential Class II device-quality recall",
+    "quality_signal": "Actuator complaint volume increased after tooling refresh.",
+    "summary": "Moderate risk driven by inhaler actuator complaints and device variability.",
+    "active_ingredients": [
+      {
+        "name": "Albuterol Sulfate",
+        "strength": "90 mcg/actuation"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "1 inhaler canister",
+        "package_ndc": "70011-244-01"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Device consistency",
+        "impact": "Medium",
+        "detail": "Spray-pattern deviations are clustered around new tooling lots."
+      },
+      {
+        "driver": "Complaint severity",
+        "impact": "Medium",
+        "detail": "Reports include multiple instances of incomplete actuation."
+      }
+    ],
+    "compliance_flags": [
+      "Tooling validation follow-up in progress",
+      "Field complaint trending above baseline"
+    ],
+    "recall_history": []
+  },
+  {
+    "id": "prod-008",
+    "brand_name": "OncoShield",
+    "generic_name": "Ondansetron Injection",
+    "labeler": "Meridian Oncology Supply",
+    "manufacturer": "Meridian Oncology Sterile Services",
+    "product_ndc": "68544-909-02",
+    "application_number": "ANDA205601",
+    "marketing_category": "ANDA",
+    "product_type": "Human Prescription Drug",
+    "dosage_form": "Injection, Solution",
+    "route": "Intravenous",
+    "finished": "Finished",
+    "market_start_date": "2020-07-06",
+    "listing_expiration_date": "2026-12-31",
+    "predicted_risk_level": "High",
+    "risk_score": 0.88,
+    "predicted_action": "Potential Class I sterile recall",
+    "quality_signal": "Sterile overfill variation and particulate complaint severity are both elevated.",
+    "summary": "High risk linked to sterile-fill concerns and a maturing complaint trend.",
+    "active_ingredients": [
+      {
+        "name": "Ondansetron Hydrochloride",
+        "strength": "2 mg/mL"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "25 single-dose vials",
+        "package_ndc": "68544-909-25"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Particulate complaints",
+        "impact": "High",
+        "detail": "Field complaints reference visible particles in multiple hospitals."
+      },
+      {
+        "driver": "Overfill variability",
+        "impact": "High",
+        "detail": "Batch release data show widening fill-volume dispersion."
+      }
+    ],
+    "compliance_flags": [
+      "Sterile batch review escalated to quality leadership",
+      "Two lots placed under enhanced market surveillance"
+    ],
+    "recall_history": [
+      {
+        "event_date": "2025-09-05",
+        "classification": "Class I",
+        "reason": "Particulate matter risk in oncology infusion setting"
+      }
+    ]
+  },
+  {
+    "id": "prod-009",
+    "brand_name": "FUROSEMIDE",
+    "generic_name": "Furosemide Tablet",
+    "labeler": "Hikma Pharmaceuticals USA Inc.",
+    "manufacturer": "Boehringer Ingelheim Roxane Inc.",
+    "product_ndc": "0054-3294",
+    "application_number": "ANDA070434",
+    "marketing_category": "ANDA",
+    "product_type": "Human Prescription Drug",
+    "dosage_form": "Tablet",
+    "route": "Oral",
+    "finished": "Finished",
+    "market_start_date": "2014-09-01",
+    "listing_expiration_date": "2027-09-30",
+    "predicted_risk_level": "High",
+    "risk_score": 0.82,
+    "predicted_action": "Potential Class II CGMP-driven recall",
+    "quality_signal": "Matched enforcement history shows API mix-up and repeated recall linkage on the same product NDC.",
+    "summary": "High predicted risk based on a matched NDC with prior CGMP deviation and multiple enforcement links.",
+    "active_ingredients": [
+      {
+        "name": "Furosemide",
+        "strength": "20 mg"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "1000-count bottle",
+        "package_ndc": "0054-4297-31"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Matched recall history",
+        "impact": "High",
+        "detail": "The NDC appears in the matched database with more than one linked enforcement event."
+      },
+      {
+        "driver": "CGMP deviation",
+        "impact": "High",
+        "detail": "A prior recall cited accidental use of the wrong active pharmaceutical ingredient stream."
+      }
+    ],
+    "compliance_flags": [
+      "Historical product-NDC match appears in both FAERS and enforcement data",
+      "Prior recall reason references manufacturing mix-up",
+      "Classification severity escalated across linked enforcement events"
+    ],
+    "recall_history": [
+      {
+        "event_date": "2015-09-25",
+        "classification": "Class III",
+        "reason": "CGMP deviations involving API intended for a different furosemide product"
+      },
+      {
+        "event_date": "2016-10-01",
+        "classification": "Class II",
+        "reason": "Follow-on enforcement linkage on the same matched product NDC"
+      }
+    ]
+  },
+  {
+    "id": "prod-010",
+    "brand_name": "ENDOCET",
+    "generic_name": "Oxycodone and Acetaminophen Tablet",
+    "labeler": "Endo Pharmaceuticals, Inc.",
+    "manufacturer": "Novartis",
+    "product_ndc": "60951-797-70",
+    "application_number": "NDA_UNAVAILABLE",
+    "marketing_category": "NDA",
+    "product_type": "Human Prescription Drug",
+    "dosage_form": "Tablet",
+    "route": "Oral",
+    "finished": "Finished",
+    "market_start_date": "2012-01-01",
+    "listing_expiration_date": "2026-12-31",
+    "predicted_risk_level": "High",
+    "risk_score": 0.86,
+    "predicted_action": "Potential Class II packaging or tablet-mix recall",
+    "quality_signal": "Historical enforcement text cites foreign tablets mixed into bottles of the marketed strength.",
+    "summary": "High predicted risk due to medication-mix complaints and strength-confusion consequences at the bottle level.",
+    "active_ingredients": [
+      {
+        "name": "Oxycodone",
+        "strength": "10 mg"
+      },
+      {
+        "name": "Acetaminophen",
+        "strength": "650 mg"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "100-count bottle",
+        "package_ndc": "60951-797-70"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Foreign tablet mix-up",
+        "impact": "High",
+        "detail": "A customer complaint reported 10 mg/325 mg tablets mixed into 10 mg/650 mg bottles."
+      },
+      {
+        "driver": "Strength confusion",
+        "impact": "High",
+        "detail": "Mixed-strength opioid combination products create elevated patient-safety risk."
+      }
+    ],
+    "compliance_flags": [
+      "Bottle-level mix-up risk in historical enforcement text",
+      "Customer complaint triggered prior recall action",
+      "Opioid combination product requires stricter packaging controls"
+    ],
+    "recall_history": [
+      {
+        "event_date": "2012-06-20",
+        "classification": "Class III",
+        "reason": "Foreign tablets found mixed in bottles labeled as Endocet 10 mg/650 mg"
+      }
+    ]
+  },
+  {
+    "id": "prod-011",
+    "brand_name": "ARTHROTEC 75",
+    "generic_name": "Diclofenac Sodium and Misoprostol Tablet",
+    "labeler": "Physicians Total Care, Inc.",
+    "manufacturer": "G.D. Searle LLC Div Pfizer",
+    "product_ndc": "54868-4165-1",
+    "application_number": "NDA_UNAVAILABLE",
+    "marketing_category": "NDA",
+    "product_type": "Human Prescription Drug",
+    "dosage_form": "Tablet",
+    "route": "Oral",
+    "finished": "Finished",
+    "market_start_date": "2012-01-01",
+    "listing_expiration_date": "2026-09-30",
+    "predicted_risk_level": "Moderate",
+    "risk_score": 0.63,
+    "predicted_action": "Potential Class II packaging-quality recall",
+    "quality_signal": "Historical recall language points to broken or separated tablets in repackaged lots.",
+    "summary": "Moderate predicted risk driven by repackaging fragility and tablet-separation quality issues.",
+    "active_ingredients": [
+      {
+        "name": "Diclofenac Sodium",
+        "strength": "75 mg"
+      },
+      {
+        "name": "Misoprostol",
+        "strength": "200 mcg"
+      }
+    ],
+    "packaging": [
+      {
+        "package_description": "30-count bottle",
+        "package_ndc": "54868-4165-1"
+      },
+      {
+        "package_description": "60-count bottle",
+        "package_ndc": "54868-4165-0"
+      }
+    ],
+    "risk_drivers": [
+      {
+        "driver": "Tablet separation",
+        "impact": "Medium",
+        "detail": "The historical recall reason cites broken tablets in lots used for repackaging."
+      },
+      {
+        "driver": "Repackaging complexity",
+        "impact": "Medium",
+        "detail": "Secondary packaging steps increase the chance of physical-quality drift."
+      }
+    ],
+    "compliance_flags": [
+      "Repackaged lots were subject to prior recall action",
+      "Physical tablet integrity issue in enforcement history",
+      "Multiple package sizes share the same product line"
+    ],
+    "recall_history": [
+      {
+        "event_date": "2012-06-20",
+        "classification": "Class II",
+        "reason": "Broken tablets found in lots repackaged as Arthrotec 75"
+      }
+    ]
+  }
+]
