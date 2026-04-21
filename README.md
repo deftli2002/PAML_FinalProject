@@ -5,6 +5,7 @@ It is a pretty simple pipeline for predicting FDA drug recall risk.
 ## Project Structure
 ```text
 PAML_FinalProject/
+├── data/
 ├── feature_engineering/
 ├── models/
 ├── evaluation/
@@ -21,6 +22,10 @@ python3 -m pip install -r requirements.txt
 ```
 
 ## Files
+### data/
+- `product_recall_features_2004_2008.db`  
+  SQLite database containing product recall features and labels for FDA drug recall prediction.
+
 ### feature_engineering/
 - `build_product_feature_database.py`  
   Builds the product feature database that is used later for modeling.
@@ -51,7 +56,7 @@ python3 feature_engineering/build_product_feature_database.py
 ```
 Inspect the dataset:
 ```bash
-python3 evaluation/inspect_product_dataset.py --db-path path/to/database.db
+python3 evaluation/inspect_product_dataset.py --db-path data/product_recall_features_2004_2008.db
 ```
 Evaluate predictions:
 ```bash
