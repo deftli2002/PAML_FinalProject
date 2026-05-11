@@ -1,51 +1,83 @@
 import json
 from pathlib import Path
+
 import streamlit as st
 from detail import show_detail
 
-st.set_page_config(page_title="RegLens",layout="wide")
-DATA_PATH =Path(__file__).parent.parent / "mock" / "products.json"
-if "selected_product_id" not in st.session_state:
-    st.session_state["selected_product_id"] = None
-with open(DATA_PATH, "r", encoding="utf-8") as f:
-    products = json.load(f)
-selected_product =None
-for product in products:
-    if product["id"]== st.session_state["selected_product_id"]:
-        selected_product = product
-        break
+st.set_page_config(page_title="RegLens", layout="wide")
+DATA =Path(__file__).parent/"data" / "products_enriched.json"
+PAGE =25
 
-if selected_product is None:
+
+@st.cache_data(show_spinner=False)
+def load_products():
+    if not DATA.is_file():
+        return []
+    raw =json.loads(DATA.read_text(encoding="utf-8"))
+    return raw["products"] if isinstance(raw, dict) and "products" in raw else (raw if isinstance(raw, list) else [])
+
+def dedupe(rows):
+    seen,out = set(),[]
+    for p in rows:
+        s=float(p.get("risk_score", 0))
+        k=(str(p.get("brand_name", "")).lower().strip(), str(p.get("generic_name", "")).lower().strip(), s)
+        if k in seen:
+            continue
+        seen.add(k)
+        out.append(p)
+    return out
+
+
+ss = st.session_state
+ss.setdefault("selected_product_id", None)
+ss.setdefault("list_page", 0)
+ss.setdefault("list_query","")
+
+rows = load_products()
+if not rows:
+    st.error(f"Missing {DATA}. Run: python3 frontend/scripts/build_products_enriched.py")
+    st.stop()
+
+sel = next((p for p in rows if p["id"] == ss["selected_product_id"]), None)
+if sel:
+    show_detail(sel)
+else:
     st.title("RegLens")
-    st.write("Streamlit for FDA drugs recall risk rate.")
-    st.caption("Search for drugs you want to know. For example: FUROSEMIDE、ENDOCET、ARTHROTEC、0054-3294、Acetaminophen")
-    query =st.text_input("Search..")
-    results =[]
-    for product in products:
-        if query:
-            text =" ".join([product["brand_name"],product["generic_name"],]).lower()
-            if query.lower().strip() not in text:
-                continue
-        results.append(product)
+    q =st.text_input("Search", "").lower().strip()
+    r = [p for p in rows if not q or q in f"{p.get('brand_name','')} {p.get('generic_name','')} {p.get('entity_key','')}".lower()]
+    r.sort(key=lambda p: float(p.get("risk_score") or 0), reverse=True)
+    r = dedupe(r)
+    if q != ss["list_query"]:
+        ss["list_query"], ss["list_page"] = q, 0
+    npg = max(1, (len(r) + PAGE - 1)// PAGE)
+    ss["list_page"] = min(ss["list_page"], npg - 1)
+    pg =ss["list_page"]
+    chunk = r[pg * PAGE : (pg + 1)* PAGE]
 
-    results.sort(key=lambda x: x["risk_score"],reverse=True)
-    col1, col2,col3 =st.columns(3)
-    col1.metric("Products",len(results))
-    col2.metric("High risk",len([x for x in results if x["predicted_risk_level"] =="High"]))
-    for product in results:
-        recall_probability = int(float(product["risk_score"])*100)
-        left,right =st.columns([5, 1])
-        with left:
-            st.subheader(product["brand_name"])
-            st.write("Generic name:",product["generic_name"])
-            st.write("Risk level:",product["predicted_risk_level"])
-            st.write("predicted action:",product["predicted_action"])
-            st.write("Risk score:",product["risk_score"])
-            st.write("Recall probability:",f"{recall_probability}%")
-        with right:
-            if st.button("Detail", key=product["id"]):
-                st.session_state["selected_product_id"] =product["id"]
+    a, b, c = st.columns(3)
+    a.metric("items", len(r))
+    b.metric("high", sum(1 for x in r if x.get("predicted_risk_level") == "High"))
+    c.metric("page", f"{pg + 1}/{npg}")
+    p0, p1, _ = st.columns([1, 1, 6])
+    if p0.button("Prev", disabled=pg <= 0):
+        ss["list_page"] -= 1
+        st.rerun()
+    if p1.button("Next", disabled=pg >= npg - 1):
+        ss["list_page"] += 1
+        st.rerun()
+
+    for p in chunk:
+        L, R = st.columns([5, 1])
+        with L:
+            st.subheader(p["brand_name"])
+            pct = int(float(p["risk_score"]) *100)
+            st.write(f"Generic:{p['generic_name']}")
+            st.write(f"Risk: {p['predicted_risk_level']}")
+            st.write(f"Action:{p['predicted_action']}")
+            st.write(f"Score:{p['risk_score']}")
+            st.write(f"Recall rate:{pct}%")
+        with R:
+            if st.button("Detail", key=p["id"]):
+                ss["selected_product_id"]= p["id"]
                 st.rerun()
         st.divider()
-else:
-    show_detail(selected_product)
