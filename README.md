@@ -1,6 +1,6 @@
 # PAML Final Project
-This is my final project for PAML.  
-It is a pretty simple pipeline for predicting FDA drug recall risk.
+This is our final project for PAML, a simple pipeline for predicting FDA drug recall risk.
+Group members: Wenzhuo Ma, Yi Tang, Haocheng Zhu, Xuanang Li, Jiayue Kang, Xinyue Chen
 
 ## Project Structure
 ```
