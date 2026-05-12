@@ -24,16 +24,37 @@ from data_initialize.build_match_database import (  # noqa: E402
     parse_yyyymmdd,
 )
 
+# change data directory and default DB paths as needed
+DATA_DIR = Path("/Volumes/雷电硬盘盒/data") 
 
-DATA_DIR = Path("/Volumes/雷电硬盘盒/data")
-
-DEFAULT_FAERS_DB_PATH = DATA_DIR / "faers_2004_2008.db"
-DEFAULT_MATCH_DB_PATH = DATA_DIR / "match_through_2008_04.db"
-DEFAULT_OUTPUT_DB_PATH = DATA_DIR / "product_recall_features_2004_2008.db"
+DEFAULT_FAERS_DB_PATH = DATA_DIR / "faers_2004_2008.db"  # the path of original data
+DEFAULT_MATCH_DB_PATH = DATA_DIR / "match_through_2008_04.db"    # the path of matched data
+DEFAULT_OUTPUT_DB_PATH = DATA_DIR / "product_recall_features_2004_2008.db"  # output path for the product feature database
 
 
 DEFAULT_FAERS_START_DATE = "20040102"
 DEFAULT_FAERS_END_DATE = "20080430"
+
+HIGH_RISK_SCORE = 3.5
+
+ROUTE_RULES = [
+    (4.0, ("intrathecal", "intraventricular", "intravitreal", "intraocular", "epidural")),
+    (3.5, ("intravenous", "infusion", "injectable", "injection")),
+    (3.0, ("intramuscular", "subcutaneous", "implant", "inhalation", "nebul")),
+    (2.5, ("ophthalmic", "otic", "nasal", "rectal", "vaginal", "transdermal")),
+    (1.5, ("topical", "dermal", "cutaneous")),
+    (1.0, ("oral", "enteral", "sublingual", "buccal")),
+]
+
+INDICATION_RULES = [
+    (4.0, ("cancer", "carcinoma", "tumor", "tumour", "leukemia", "lymphoma", "myeloma", "neoplasm", "metastatic")),
+    (4.0, ("transplant", "graft", "rejection", "gvhd", "immunosuppression")),
+    (3.5, ("sepsis", "septic", "meningitis", "hiv", "aids", "tuberculosis", "hepatitis", "pneumonia")),
+    (3.5, ("heart failure", "myocardial infarction", "arrhythmia", "thrombosis", "embolism", "stroke")),
+    (3.0, ("renal failure", "kidney failure", "dialysis", "epilepsy", "seizure", "schizophrenia", "bipolar")),
+    (2.5, ("diabetes", "hypertension", "asthma", "copd", "depression")),
+    (1.5, ("pain", "nausea", "vomiting", "rash", "dermatitis", "allergy", "acne", "cold")),
+]
 
 
 @dataclass
@@ -50,6 +71,14 @@ class Stats:
     other_serious_count: int = 0
     suspect_drug_count: int = 0
     reaction_count: int = 0
+    indication_score_sum: float = 0.0
+    indication_score_n: int = 0
+    indication_score_max: float = 0.0
+    high_risk_indication_count: int = 0
+    route_score_sum: float = 0.0
+    route_score_n: int = 0
+    route_score_max: float = 0.0
+    high_risk_route_count: int = 0
     patient_age_sum: float = 0.0
     patient_age_count: int = 0
     patient_age_missing_count: int = 0
@@ -193,6 +222,15 @@ def clean_lower(value: Any) -> str | None:
         return None
     text = str(value).strip().lower()
     return text or None
+
+
+# Score route and indication text with simple keyword rules.
+def text_score(text: str, rules: list[tuple[float, tuple[str, ...]]]) -> float:
+    score = 0.0
+    for weight, keys in rules:
+        if any(key in text for key in keys):
+            score = max(score, weight)
+    return score
 
 
 def split_joined_values(value: Any) -> Iterable[str]:
@@ -350,10 +388,22 @@ def add_report(
     if indication:
         stats.indications.add(indication)
         stats.has_drugindication = 1
+        score = text_score(indication, INDICATION_RULES)
+        stats.indication_score_sum += score
+        stats.indication_score_n += 1
+        stats.indication_score_max = max(stats.indication_score_max, score)
+        if score >= HIGH_RISK_SCORE:
+            stats.high_risk_indication_count += 1
     route = clean_lower(entity_row.get("drugadministrationroute"))
     if route:
         stats.routes.add(route)
         stats.has_administrationroute = 1
+        score = text_score(route, ROUTE_RULES)
+        stats.route_score_sum += score
+        stats.route_score_n += 1
+        stats.route_score_max = max(stats.route_score_max, score)
+        if score >= HIGH_RISK_SCORE:
+            stats.high_risk_route_count += 1
 
     if list(split_joined_values(entity_row.get("openfda_application_number"))):
         stats.has_application_number = 1
@@ -509,6 +559,16 @@ def feature_tuple(key: str, stats: Stats, label: int) -> tuple[Any, ...]:
         safe_rate(stats.reaction_count, n),
         len(stats.indications),
         len(stats.routes),
+        stats.indication_score_sum,
+        safe_rate(stats.indication_score_sum, stats.indication_score_n),
+        stats.indication_score_max,
+        stats.high_risk_indication_count,
+        safe_rate(stats.high_risk_indication_count, stats.indication_score_n),
+        stats.route_score_sum,
+        safe_rate(stats.route_score_sum, stats.route_score_n),
+        stats.route_score_max,
+        stats.high_risk_route_count,
+        safe_rate(stats.high_risk_route_count, stats.route_score_n),
         stats.has_application_number,
         stats.has_brand_name,
         stats.has_generic_name,
@@ -562,6 +622,16 @@ def ensure_output_schema(conn: sqlite3.Connection) -> None:
             reaction_per_report_mean REAL NOT NULL,
             unique_indication_count INTEGER NOT NULL,
             unique_route_count INTEGER NOT NULL,
+            indication_score_sum REAL NOT NULL,
+            indication_score_mean REAL NOT NULL,
+            indication_score_max REAL NOT NULL,
+            high_risk_indication_count INTEGER NOT NULL,
+            high_risk_indication_rate REAL NOT NULL,
+            route_score_sum REAL NOT NULL,
+            route_score_mean REAL NOT NULL,
+            route_score_max REAL NOT NULL,
+            high_risk_route_count INTEGER NOT NULL,
+            high_risk_route_rate REAL NOT NULL,
             has_application_number INTEGER NOT NULL,
             has_brand_name INTEGER NOT NULL,
             has_generic_name INTEGER NOT NULL,
@@ -625,6 +695,10 @@ def write_product_features(
             suspect_drug_count, suspect_drug_rate,
             reaction_count, unique_reaction_count, reaction_per_report_mean,
             unique_indication_count, unique_route_count,
+            indication_score_sum, indication_score_mean, indication_score_max,
+            high_risk_indication_count, high_risk_indication_rate,
+            route_score_sum, route_score_mean, route_score_max,
+            high_risk_route_count, high_risk_route_rate,
             has_application_number, has_brand_name, has_generic_name,
             has_substance_name, has_manufacturer_name,
             has_drugindication, has_administrationroute,
@@ -633,7 +707,7 @@ def write_product_features(
             patient_age_mean, patient_age_missing_rate,
             female_rate, male_rate
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """
     batch: list[tuple[Any, ...]] = []
     written = 0
@@ -721,6 +795,7 @@ def main() -> int:
             "faers_end_date": args.faers_end_date,
             "cutoff_date": cutoff.strftime("%Y%m%d"),
             "label_definition": "label_recalled=1 if entity_key appears in match_index",
+            "risk_score_rules": "indication and route use keyword-based weights",
             "scanned_faers_rows": n_rows,
             "product_updates": updates,
             "recalled_keys_loaded": len(recalled),
