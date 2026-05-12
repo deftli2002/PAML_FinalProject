@@ -64,7 +64,7 @@ python3 -m pip install -r requirements.txt
   Evaluates prediction results using PR-AUC, ROC-AUC, F1-score, and Recall@Top-K%.
 ### frontend/
 - `frontend/data/products_enriched.json`  
-  Enriched product records used by the Streamlit app (search list and detail view).
+  Enriched product records used by the Streamlit app. Connected training results and original data to form a dataset with all complete detail information.
 
 - `frontend/streamlit/app.py`  
   Main Streamlit app for searching products.
