@@ -3,13 +3,29 @@ This is my final project for PAML.
 It is a pretty simple pipeline for predicting FDA drug recall risk.
 
 ## Project Structure
-```text
+```
 PAML_FinalProject/
 ├── data/
+│   ├── product_recall_features_2004_2008.db
+│   ├── improved_product_recall_features_2004_2008.db
+│   └── data_exploration/
+│       ├── fig1_faers_reports_by_year.png
+│       ├── fig2_enforcement_recalls_by_year.png
+│       ├── fig3_recall_classification.png
+│       └── fig4_serious_faers.png
 ├── feature_engineering/
+│   └── build_product_feature_database.py
 ├── models/
+│   └── logistic_regression.py
 ├── evaluation/
+│   ├── inspect_product_dataset.py
+│   └── evaluate_predictions.py
 ├── frontend/
+│   ├── data/
+│   │   └── products_enriched.json
+│   └── streamlit/
+│       ├── app.py
+│       └── detail.py
 ├── requirements.txt
 └── README.md
 ```
@@ -24,7 +40,13 @@ python3 -m pip install -r requirements.txt
 ## Files
 ### data/
 - `product_recall_features_2004_2008.db`  
-  SQLite database containing product recall features and labels for FDA drug recall prediction.
+  SQLite database of product-level FAERS-derived features and recall labels (baseline export).
+
+- `improved_product_recall_features_2004_2008.db`  
+  Same kind of schema: product-level features with recall labels; use whichever matches your modeling run.
+
+- `data_exploration/`  
+  Exploratory figures: FAERS volume by year, enforcement recalls by year, recall classification overview, and serious-outcome FAERS patterns.
 
 ### feature_engineering/
 - `build_product_feature_database.py`  
@@ -41,12 +63,13 @@ python3 -m pip install -r requirements.txt
 - `evaluate_predictions.py`  
   Evaluates prediction results using PR-AUC, ROC-AUC, F1-score, and Recall@Top-K%.
 ### frontend/
+- `frontend/data/products_enriched.json`  
+  Enriched product records used by the Streamlit app (search list and detail view).
+
 - `frontend/streamlit/app.py`  
   Main Streamlit app for searching products.
 - `frontend/streamlit/detail.py`  
-  Detail page for a selected product.
-- `frontend/mock/products.json`  
-  Mock data used by the frontend.
+  Product detail view: narrative fields, feature expander, ingredients and recall-history tables.
 
 ## How to Run
 
@@ -56,7 +79,8 @@ python3 feature_engineering/build_product_feature_database.py
 ```
 Inspect the dataset:
 ```bash
-python3 evaluation/inspect_product_dataset.py --db-path data/product_recall_features_2004_2008.db
+python3 evaluation/inspect_product_dataset.py \
+  --db-path data/improved_product_recall_features_2004_2008.db
 ```
 Evaluate predictions:
 ```bash
