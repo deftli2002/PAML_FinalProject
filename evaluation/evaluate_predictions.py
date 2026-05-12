@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Score binary classification predictions from a CSV file."""
+# Score binary classification predictions.
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import argparse
 import csv
 from pathlib import Path
 
-
+# Command-line options
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Score model predictions from a CSV file."
@@ -30,7 +30,7 @@ def parse_args() -> argparse.Namespace:
     )
     return parser.parse_args()
 
-
+# Read prediction rows
 def read_rows(
     csv_path: Path,
     *,
@@ -52,7 +52,7 @@ def read_rows(
             rows.append((label, score, pred))
     return rows
 
-
+# Confusion matrix counts
 def confusion_counts(rows: list[tuple[int, float, int]]) -> tuple[int, int, int, int]:
     tp = fp = tn = fn = 0
     for label, _score, pred in rows:
@@ -66,11 +66,11 @@ def confusion_counts(rows: list[tuple[int, float, int]]) -> tuple[int, int, int,
             fn += 1
     return tp, fp, tn, fn
 
-
+# Safe division
 def safe_div(num: float, den: float) -> float:
     return num / den if den else 0.0
 
-
+# Precision, recall, and F1-score
 def precision_recall_f1(rows: list[tuple[int, float, int]]) -> tuple[float, float, float]:
     tp, fp, _tn, fn = confusion_counts(rows)
     precision = safe_div(tp, tp + fp)
@@ -78,7 +78,7 @@ def precision_recall_f1(rows: list[tuple[int, float, int]]) -> tuple[float, floa
     f1 = safe_div(2 * precision * recall, precision + recall)
     return precision, recall, f1
 
-
+# Recall among the highest-scored rows
 def recall_at_top_fraction(rows: list[tuple[int, float, int]], top_fraction: float) -> float:
     if not rows:
         return 0.0
@@ -89,7 +89,7 @@ def recall_at_top_fraction(rows: list[tuple[int, float, int]], top_fraction: flo
     captured_positive = sum(label for label, _score, _pred in top_rows)
     return safe_div(captured_positive, total_positive)
 
-
+# ROC-AUC
 def roc_auc(rows: list[tuple[int, float, int]]) -> float:
     positives = [(score) for label, score, _pred in rows if label == 1]
     negatives = [(score) for label, score, _pred in rows if label == 0]
@@ -105,7 +105,7 @@ def roc_auc(rows: list[tuple[int, float, int]]) -> float:
                 wins += 0.5
     return wins / total
 
-
+# PR-AUC
 def pr_auc(rows: list[tuple[int, float, int]]) -> float:
     ranked = sorted(rows, key=lambda item: item[1], reverse=True)
     total_positive = sum(label for label, _score, _pred in ranked)
@@ -127,7 +127,7 @@ def pr_auc(rows: list[tuple[int, float, int]]) -> float:
         prev_recall = recall
     return area
 
-
+# Script entry point
 def main() -> int:
     args = parse_args()
     csv_path = Path(args.csv_path).expanduser().resolve()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the final offline model evaluation for the FDA recall project."""
+# Run final model evaluation for the FDA recall project.
 
 from __future__ import annotations
 
@@ -87,7 +87,7 @@ class Split:
     val: np.ndarray
     test: np.ndarray
 
-
+# Command-line options.
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run final FDA recall model evaluation.")
     parser.add_argument(
@@ -98,7 +98,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         default=str(REPO_ROOT / "evaluation" / "results"),
-        help="Directory for predictions, metrics, and protocol files.",
+        help="Directory for predictions and metric files.",
     )
     parser.add_argument("--seed", type=int, default=42, help="Random seed.")
     parser.add_argument("--train-frac", type=float, default=0.70)
@@ -111,7 +111,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rf-min-samples-split", type=int, default=50)
     return parser.parse_args()
 
-
+# Load labels and feature columns.
 def load_dataset(db_path: Path) -> tuple[list[str], np.ndarray, np.ndarray]:
     if not db_path.is_file():
         raise FileNotFoundError(f"Feature database not found: {db_path}")
@@ -129,7 +129,7 @@ def load_dataset(db_path: Path) -> tuple[list[str], np.ndarray, np.ndarray]:
     features = np.asarray([row[2:] for row in rows], dtype=float)
     return entity_keys, labels, features
 
-
+# Stratified train/validation/test split.
 def stratified_split(
     y: np.ndarray,
     *,
@@ -161,14 +161,14 @@ def stratified_split(
     test = rng.permutation(np.concatenate(test_parts))
     return Split(train=train, val=val, test=test)
 
-
+# Build metric rows from scores.
 def rows_from_scores(y: np.ndarray, scores: np.ndarray, threshold: float) -> list[tuple[int, float, int]]:
     return [
         (int(label), float(score), 1 if float(score) >= threshold else 0)
         for label, score in zip(y, scores)
     ]
 
-
+# Pick the best validation threshold.
 def choose_threshold(y_val: np.ndarray, scores: np.ndarray, grid_size: int) -> tuple[float, float]:
     best_threshold = 0.5
     best_f1 = -1.0
@@ -180,7 +180,7 @@ def choose_threshold(y_val: np.ndarray, scores: np.ndarray, grid_size: int) -> t
             best_threshold = float(threshold)
     return best_threshold, best_f1
 
-
+# Score one model.
 def evaluate_model(
     *,
     model_name: str,
@@ -220,7 +220,7 @@ def evaluate_model(
     result["prediction_file"] = prediction_path.name
     return result
 
-
+# Write metrics.
 def write_metrics(output_dir: Path, metrics: list[dict[str, float | int | str]]) -> None:
     fields = [
         "model",
@@ -245,7 +245,7 @@ def write_metrics(output_dir: Path, metrics: list[dict[str, float | int | str]])
         for row in metrics:
             writer.writerow(row)
 
-
+# Write settings and summary.
 def write_protocol(
     *,
     output_dir: Path,
@@ -301,8 +301,8 @@ def write_protocol(
         f"- Split: stratified {args.train_frac:.0%} train / {args.val_frac:.0%} validation / {args.test_frac:.0%} test",
         f"- Random seed: `{args.seed}`",
         f"- Test rows: `{len(split.test)}` with `{int(y[split.test].sum())}` positive recall labels",
-        "- Thresholds: selected on the validation split by maximizing F1-score",
-        "- Final metrics: computed only on the held-out test split",
+        "- Thresholds: chosen on the validation split",
+        "- Metrics: test split only",
         "",
         "## Metrics",
         "",
@@ -319,7 +319,7 @@ def write_protocol(
     lines.append("Prediction CSV files and `final_metrics.csv` are in this directory.")
     (output_dir / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-
+# Train models and save outputs.
 def main() -> int:
     args = parse_args()
     db_path = Path(args.db_path).expanduser().resolve()

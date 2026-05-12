@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inspect a product-level feature database."""
+# Inspect a product-level feature database
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-
+# Command-line options
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Inspect a product-level feature SQLite DB."
@@ -27,29 +27,29 @@ def parse_args() -> argparse.Namespace:
     )
     return parser.parse_args()
 
-
+# Read-only SQLite connection
 def connect_read_only(path: Path) -> sqlite3.Connection:
     uri = f"file:{path.as_posix()}?mode=ro"
     conn = sqlite3.connect(uri, uri=True)
     conn.row_factory = sqlite3.Row
     return conn
 
-
+# SQLite row as a dictionary
 def compact_row(row: sqlite3.Row) -> dict[str, Any]:
     return {key: row[key] for key in row.keys()}
 
-
+# Pretty JSON output
 def print_json(obj: Any) -> None:
     print(json.dumps(obj, ensure_ascii=False, indent=2))
 
-
+# Console section header
 def print_section(title: str) -> None:
     print()
     print("=" * 88)
     print(title)
     print("=" * 88)
 
-
+# Print dataset checks
 def main() -> int:
     args = parse_args()
     db_path = Path(args.db_path).expanduser().resolve()
@@ -123,7 +123,7 @@ def main() -> int:
 
         print_section("Metrics")
         print(
-            "Use PR-AUC, ROC-AUC, F1-score and Recall@Top-K% for the final "
+            "PR-AUC, ROC-AUC, F1-score and Recall@Top-K% for the final "
             "evaluation."
         )
     finally:

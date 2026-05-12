@@ -1,6 +1,6 @@
 # Evaluation
 
-Scripts and saved outputs for offline model evaluation.
+Scripts and saved outputs for model evaluation.
 
 ## Files
 
@@ -8,11 +8,9 @@ Scripts and saved outputs for offline model evaluation.
   Read a product-level feature SQLite database and print dataset size, label
   balance, and a few feature summaries.
 - `evaluate_predictions.py`
-  Score a CSV of model predictions using the metrics from the proposal:
-  PR-AUC, ROC-AUC, F1-score, and Recall@Top-K%.
+  Score a prediction CSV with PR-AUC, ROC-AUC, F1-score, and Recall@Top-K%.
 - `run_final_evaluation.py`
-  Run the final train/validation/test experiment and write prediction and metric
-  files under `evaluation/results/`.
+  Run the train/validation/test experiment and save the result files.
 
 ## Midpoint usage
 
@@ -23,18 +21,17 @@ python3 evaluation/inspect_product_dataset.py \
   --db-path data/product_recall_features_2004_2005.db
 ```
 
-## Final Reproducible Evaluation
+## Final Evaluation
 
-Run the final experiment from the repository root:
+Run from the repository root:
 
 ```bash
 python3 evaluation/run_final_evaluation.py
 ```
 
-This uses `data/improved_product_recall_features_2004_2008.db`, a
-stratified 70%/15%/15% train/validation/test split, and `random_state=42`.
-Thresholds are selected on the validation split by maximizing F1-score, and all
-reported metrics are computed on the held-out test split.
+This uses `data/improved_product_recall_features_2004_2008.db`, a stratified
+70%/15%/15% train/validation/test split, and `random_state=42`.
+Thresholds are chosen on the validation set.
 
 Outputs:
 
@@ -44,7 +41,7 @@ Outputs:
 - `evaluation/results/logistic_regression_test_predictions.csv`
 - `evaluation/results/random_forest_test_predictions.csv`
 
-Current final test metrics:
+Test metrics:
 
 | Model | PR-AUC | ROC-AUC | Precision | Recall | F1 | Recall@Top-10% |
 |---|---:|---:|---:|---:|---:|---:|
@@ -71,5 +68,5 @@ python3 evaluation/evaluate_predictions.py \
 Optional column:
 
 - `pred`
-  If present, it is used for threshold-based metrics. Otherwise scores are
-  converted with `--threshold`.
+  If present, it is used for threshold-based metrics. Otherwise scores use
+  `--threshold`.

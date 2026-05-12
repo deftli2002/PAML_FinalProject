@@ -4,8 +4,8 @@
 - Split: stratified 70% train / 15% validation / 15% test
 - Random seed: `42`
 - Test rows: `7790` with `403` positive recall labels
-- Thresholds: selected on the validation split by maximizing F1-score
-- Final metrics: computed only on the held-out test split
+- Thresholds: chosen on the validation split
+- Metrics: test split only
 
 ## Metrics
 
