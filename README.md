@@ -29,6 +29,7 @@ PAML_FinalProject/
 │   └── streamlit/
 │       ├── app.py
 │       └── detail.py
+├── final report.pdf
 ├── requirements.txt
 └── README.md
 ```
