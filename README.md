@@ -87,9 +87,9 @@ python3 models/evaluate_predictions.py --csv-path predictions/linear_regression_
 
 | Model | PR-AUC | ROC-AUC | Precision | Recall | F1 | Recall@Top-10% | TP | FP | TN | FN |
 |-------|-------:|--------:|----------:|-------:|---:|---------------:|---:|---:|---:|---:|
-| Linear Regression Baseline | 0.1095 | 0.6612 | 0.0000 | 0.0000 | 0.0000 | 0.2185 | 0 | 0 | 9822 | 563 |
-| Logistic Regression | 0.1107 | 0.6808 | 0.0882 | 0.6661 | 0.1557 | 0.2238 | 375 | 3879 | 5943 | 188 |
-| Random Forest | 0.3030 | 0.8556 | 0.1707 | 0.8117 | 0.2820 | 0.4849 | 457 | 2221 | 7601 | 106 |
+| Linear Regression Baseline | 0.1164 | 0.6777 | 0.1147 | 0.3102 | 0.1674 | 0.2481 | 125 | 965 | 6422 | 278 |
+| Logistic Regression | 0.1119 | 0.6884 | 0.1008 | 0.4442 | 0.1643 | 0.2432 | 179 | 1597 | 5790 | 224 |
+| Random Forest | 0.3067 | 0.8568 | 0.2757 | 0.3921 | 0.3238 | 0.4690 | 158 | 415 | 6972 | 245 |
 
 Random Forest achieved the highest ROC-AUC (0.8568) and F1 (0.3238) and was chosen as the deployed model. Logistic regression had the highest recall (0.4442) but more false positives. The linear regression baseline is for ranking comparison only.
 
