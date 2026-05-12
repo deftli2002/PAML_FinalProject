@@ -1,5 +1,5 @@
 {
-  "db_path": "/Users/alextang/Downloads/paml projct/FDA_Drug_Recalls_Predicting_System/data/improved_product_recall_features_2004_2008.db",
+  "db_path": "/Users/hazelkang/PAML_FinalProject/data/improved_product_recall_features_2004_2008.db",
   "seed": 42,
   "split": {
     "train_fraction": 0.7,
@@ -77,9 +77,9 @@
       "random_state": 42
     },
     "random_forest": {
-      "n_estimators": 25,
-      "max_depth": 8,
-      "min_samples_split": 50,
+      "n_estimators": 100,
+      "max_depth": 12,
+      "min_samples_split": 10,
       "max_features": "sqrt",
       "class_weight": "balanced",
       "random_state": 42
