@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""
-Inspect a product-level feature database.
-
-The output is meant for quick checks during the midpoint stage: row counts,
-label balance and feature summaries.
-"""
+"""Inspect a product-level feature database."""
 
 from __future__ import annotations
 
@@ -126,11 +121,10 @@ def main() -> int:
             print(f"Positive {idx}:")
             print_json(compact_row(row))
 
-        print_section("Evaluation Notes")
+        print_section("Metrics")
         print(
-            "The product-level feature table is available for model testing. "
-            "The positive class is small and the final evaluation should report "
-            "PR-AUC, ROC-AUC, F1-score and Recall@Top-K% rather than accuracy only."
+            "Use PR-AUC, ROC-AUC, F1-score and Recall@Top-K% for the final "
+            "evaluation."
         )
     finally:
         conn.close()

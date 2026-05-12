@@ -1,18 +1,5 @@
 #!/usr/bin/env python3
-"""
-Score binary classification predictions from a CSV file.
-
-Expected columns:
-- label: ground-truth label in {0, 1}
-- score: predicted risk score or probability
-
-Optional:
-- pred: predicted label in {0, 1}; if absent, it is generated from score using
-  the chosen threshold.
-
-This script avoids third-party metric libraries so it can run with the current
-project requirements.
-"""
+"""Score binary classification predictions from a CSV file."""
 
 from __future__ import annotations
 
